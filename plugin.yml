@@ -1,0 +1,8 @@
+name: PokeMclean
+version: 0.5
+main: com.ageisanint.Main
+authors: [Pitazzo, Berni]
+website: http://ageisanint.com/
+commands:
+ cleanusers:
+   description: Elimina de la carpeta /world/players a los jugadores inactivos
