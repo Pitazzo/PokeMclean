@@ -1,6 +1,7 @@
 package com.ageisanint;
 
 import java.io.File;
+import java.util.Date;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,36 +34,45 @@ public class Main extends JavaPlugin implements CommandExecutor {
 		this.plugin.saveConfig();
 	}
 
-	long deathTime = 1000 * 60 * 60 * 24 * this.plugin.getConfig().getInt("DeathTime");
 
-	File BaseFolder = new File(Bukkit.getServer().getWorld(this.plugin.getConfig().getString("World"))
-			.getWorldFolder(), "players");
+	Date date = new Date();
+	
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd,
 			String commandLabel, String[] args) {
 		Player admin = (Player) sender;
 		if (cmd.getName().equalsIgnoreCase("cleanusers")) {
-
+			int players = 0;
 			if (sender instanceof Player) {
-
+				if(admin.hasPermission("PokeMclean.use")||admin.isOp()){
+					
 				for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
 					long lastJoint = player.getLastPlayed();
-					if (lastJoint > deathTime) {
+					File BaseFolder = new File(admin.getWorld().getWorldFolder(), "players");
+					long diff = Math.abs(date.getTime() - lastJoint);
+					long diffDays = diff / (24 * 60 * 60 * 1000);
+					if (diffDays > plugin.getConfig().getInt("DeathTime")) {
 						admin.sendMessage(ChatColor.GREEN + "[PokeMclean]"
 								+ ChatColor.GOLD + "El jugador "
-								+ player.getName() + " ha sido eliminado.");
-						
-						 File playerFile = new File(BaseFolder, player.getName()+".dat");
-				            playerFile.delete();
+								+ player.getName() + " ha sido eliminado. ");
+						players ++;
+						File playerFile = new File(BaseFolder, player.getName()+".dat");
+						playerFile.delete();
 						
 					}
 				}
 				admin.sendMessage(ChatColor.GREEN + "[PokeMclean]"
-						+ ChatColor.GOLD + "El proceso de limpieza a terminado");
+						+ ChatColor.RED + "El proceso de limpieza ha terminado. Se han eliminado "+players+" jugadores inactivos.");
+				
+				}else{
+					admin.sendMessage(ChatColor.RED+"Necesitas ser administrador para usar este comando");
+				
+				}
 			} else {
 				System.out
 						.println("Este comando solo puede ser ejecutado por un jugador");
+				
 			}
 		}
 

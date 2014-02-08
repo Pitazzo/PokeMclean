@@ -1,5 +1,5 @@
 #Plugin creado por encargo de Miguel Heredia a http://ageisanint.com/ (@ageisanint), tus desarrolladores
 # de plugins y proyectos para tu server bukkit
 
-World: world
-DeathTime: 10
+#en formato de días (24h)
+DeathTime: 30

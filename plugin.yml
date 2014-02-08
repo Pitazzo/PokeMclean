@@ -5,4 +5,5 @@ authors: [Pitazzo, Berni]
 website: http://ageisanint.com/
 commands:
  cleanusers:
-   description: Elimina de la carpeta /world/players a los jugadores inactivos
+   description: Elimina de la carpeta /world/players a los jugadores inactivo
+   permission: PokeMclean.use
